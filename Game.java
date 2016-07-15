@@ -100,7 +100,7 @@ public class Game
             
         root.setCenter(ballPane);
         root.setBottom(createGameDataPane());
-        stage.setTitle("SmashOut-" + userName);
+        stage.setTitle("SmashOut");
         stage.setResizable(false);
         stage.setScene(scene);        
     }

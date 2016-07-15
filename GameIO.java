@@ -235,7 +235,7 @@ public class GameIO
         alertSave.getButtonTypes().setAll(btnYes, btnNo);
 
         Optional<ButtonType> result = alertSave.showAndWait();
-        String userName = null;
+        String userName;
         if (result.get() == btnYes)
         {
             userName = game.getUserName();

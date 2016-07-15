@@ -96,7 +96,7 @@ public class ScoresIO
         return currentScoreBoard.getTotalPts() > alScores.get(alScores.size() - 1);
     }
     
-    public void addPlayerToList(boolean quitGame)
+    public void addPlayerShowList(boolean quitGame)
     {
         Integer userPoints = currentScoreBoard.getTotalPts();
         TextInputDialog dialog = new TextInputDialog();
@@ -111,7 +111,7 @@ public class ScoresIO
             String userName = dialog.getResult();
             if (userName == null || userName.isEmpty())
             {
-                addPlayerToList(quitGame);
+                addPlayerShowList(quitGame);
             }
             else
             {

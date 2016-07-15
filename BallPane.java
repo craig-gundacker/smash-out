@@ -639,7 +639,7 @@ class BallPane extends Pane
     private void gameOverSub()
     {
         String gameName = scoreBoard.getName();
-        if (gameName != null)
+        if (gameName != null) //Game in progress loaded from file
         {
             //GameIO.addGameToDeletionList(gameName); //Current game is a saved game that requires deletion
             try
@@ -673,27 +673,17 @@ class BallPane extends Pane
             {
                 if (topScoresIO.topScorer())
                 {
-                    topScoresIO.addPlayerToList(quitGame);
+                    topScoresIO.addPlayerShowList(quitGame);
                 }
-
-                boolean clearPoints = false;                
-                if (scoreBoard.getNumLives() == 0)
-                {
-                    clearPoints = true;
-                    resetGame(clearPoints);
-                }
-                else
-                {
-                    resetGame(clearPoints);                    
-                }
-                play();                               
+                Game game = new Game();
+                game.show();                               
             }
             else
             {
                 quitGame = true;
                 if (topScoresIO.topScorer())
                 {
-                    topScoresIO.addPlayerToList(quitGame);
+                    topScoresIO.addPlayerShowList(quitGame);
                 }
                 else
                 {
