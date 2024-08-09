@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "LoaderStage",
+            "request": "launch",
+            "mainClass": "smash.LoaderStage",
+            "projectName": "smash-out_a618fab5",
+            "vmArgs": "--module-path c:/JavaFx/javafx-sdk-22.0.2/lib --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web"
+        },
+        {
+            "type": "java",
+            "name": "LoaderStage",
+            "request": "launch",
+            "mainClass": "smash.LoaderStage",
+            "projectName": "smash-out",
+            "vmArgs": "--module-path c:/JavaFx/javafx-sdk-22.0.2/lib --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web"
+        }
+    ]
+}
