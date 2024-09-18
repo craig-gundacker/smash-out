@@ -29,6 +29,7 @@ sourceSets {
             srcDirs = ['src/main']
             include '**/*.css'
             include '**/*.zip'
+            include '**/*.txt'
         }
     }
 }
