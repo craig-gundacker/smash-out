@@ -1,0 +1,24 @@
+
+
+.vertical-separator .line{
+    -fx-border-style: solid;
+}
+
+.horizontal-separator{
+    -fx-border-style: dashed;
+}
+
+.line{
+    -fx-border-width: 1px;
+    -fx-border-color: gray;   
+}
+
+#hyperlink{
+    -fx-border-style: dashed;
+    -fx-border-width: 1px;
+    -fx-border-color: gray; 
+}
+
+
+
+
