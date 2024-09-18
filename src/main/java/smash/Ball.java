@@ -9,7 +9,7 @@ public class Ball extends Circle
     protected double dy; //y axis direciton of ball
 
     /*
-    Constructor for creating a ball
+    Creates a Ball object
     */
     protected Ball(double x, double y, double radius, Color color)
     {
