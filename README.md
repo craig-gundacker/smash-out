@@ -1,6 +1,6 @@
 # Smash Out
 
-Smash Out is a Java application that is sort of based on the classic arcade game Break Out. This project uses Gradle for build automation and dependency management.
+Smash Out is a Java application loosely based on the classic arcade game Break Out. Players control a paddle to bounce a ball and earn points by breaking bricks.
 
 ## Project Structure
 
@@ -27,101 +27,54 @@ The project consists of:
 
 ## Prerequisites
 
-To build and run this project, you need to have the following installed on your system:
+You'll need to have installed:
 
-- Java Development Kit (JDK) 11 or later
-- Gradle 6.0 or later
+- Java Development Kit (JDK) 17 (tested version)
+- Git (latest version recommended)
 
-## Setting up the Project
+>Gradle installation is not required as this project uses the Gradle Wrapper, which automatically downloads the correct Gradle version.
 
-1. Create a new directory for your project and navigate to it in the terminal.
 
-2. Create a `build.gradle` file in the project root directory with the following content:
+## Cloning the Repository
 
-   ```groovy
-   plugins {
-        id 'application'
-        id 'org.openjfx.javafxplugin' version '0.0.10'
-    }
+To get started with this project, clone the repository to your local machine. To do that:
 
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        implementation 'commons-io:commons-io:2.11.0'
-    }
-
-    javafx {
-        version = "16"
-        modules = ['javafx.controls', 'javafx.fxml']
-    }
-
-    application {
-        mainClass = 'smash.LoaderStage'
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/java']
-            }
-            resources {
-                srcDirs = ['src/main']
-                include '**/*.css'
-                include '**/*.zip'
-                include '**/*.txt'
-            }
-        }
-    }
-
-    jar {
-        from {
-            configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-        }
-        manifest {
-            attributes 'Main-Class': 'smash.LoaderStage'
-        }
-    }
-
-    tasks.withType(Jar) {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    }
-
-    compileJava {
-        options.compilerArgs << '-Xlint:-module'
-    }
+1. Open your terminal or command prompt.
+2. Navigate to the directory where you want to clone the repository.
+3. Run the following command:
+   ```
+   git clone https://github.com/craig-gundacker/smash-out.git
+   ```
+4. Once the cloning process is complete, navigate to the project directory:
+   ```
+   cd smash-out
    ```
 
-3. Create the following directory structure:
-   ```
-   src/main/java/smash/
-   src/main/resources/
-   ```
+You now have a local copy of the project and can start working with it.
 
-4. Place all Java files in the `src/main/java/smash/` directory.
+## Configuration
 
-5. Place the ZIP, the high scores, and style sheet files in in the `src/main/resources/` directory.
+This project uses JavaFX. If you encounter any issues related to JavaFX, you may need to adjust the JavaFX version in the `build.gradle` file to match your Java version.
 
-## Building the Project
+## Building and running the Project
 
 To build the project, open a terminal in the project root directory and run:
 
-```
-gradle build
-```
+| UNIX    | Microsoft |
+| -------- | ------- |
+| <code>./gradlew build</code> | <code> gradlew.bat build</code>                 |
 
-This command will compile your Java files, include the resource files, and create a runnable JAR file.
+This command compiles your Java files, includes the resource files, and creates a runnable JAR file.
 
 ## Running the Application
 
-After building the project, you can run the application using:
+After building the project, run the application using:
 
-```
-gradle run
-```
+| UNIX    | Microsoft |
+| -------- | ------- |
+| <code>./gradlew run</code> | <code> gradlew.bat run</code>                 |
 
-This will start the Smash Out game with its graphical user interface.
+This starts the Smash Out graphical user interface.
 
 ## Accessing Resource Files
 
@@ -141,12 +94,13 @@ Replace "Lucille.zip" with the appropriate filename as needed.
 
 If you encounter any issues:
 
-1. Ensure all Java files are in the correct package directory (`src/main/java/smash/`).
-2. Verify that the ZIP, high scores, and style sheet files are in the `src/main/resources/` directory.
-3. Check that your Gradle and Java installations are up to date.
-4. If you have GUI issues, make sure you're using a compatible version of JavaFX. You may need to adjust the JavaFX version in the `build.gradle` file.
+1. Check that your Java installations are up to date.
+2. Make sure you're using a compatible version of JavaFX. You may need to adjust the JavaFX version in the `build.gradle` file.
+
 
 ## Contributing
 
 To contribute to this project, please fork the repository and submit a pull request with your changes.
+
+
 
