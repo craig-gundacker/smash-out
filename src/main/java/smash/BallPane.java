@@ -1,10 +1,10 @@
 package smash;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
@@ -638,20 +638,6 @@ class BallPane extends Pane
     
     private void gameOverSub()
     {
-        String gameName = scoreBoard.getName();
-        if (gameName != null) //Game in progress loaded from file
-        {
-            //GameIO.addGameToDeletionList(gameName); //Current game is a saved game that requires deletion
-            try
-            {
-                GameIO.deleteGameDir(gameName);
-            }
-            catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-        }
-          
         animation.pause();
         Alert alert = new Alert(AlertType.NONE);
         alert.setTitle("Game Over");
