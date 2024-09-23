@@ -34,7 +34,6 @@ You'll need to have installed:
 
 >Gradle installation is not required as this project uses the Gradle Wrapper, which automatically downloads the correct Gradle version.
 
-
 ## Cloning the Repository
 
 To get started with this project, clone the repository to your local machine. To do that:
@@ -42,11 +41,14 @@ To get started with this project, clone the repository to your local machine. To
 1. Open your terminal or command prompt.
 2. Navigate to the directory where you want to clone the repository.
 3. Run the following command:
-   ```
+
+   ```powershell
    git clone https://github.com/craig-gundacker/smash-out.git
    ```
+
 4. Once the cloning process is complete, navigate to the project directory:
-   ```
+
+   ```powershell
    cd smash-out
    ```
 
@@ -97,10 +99,6 @@ If you encounter any issues:
 1. Check that your Java installations are up to date.
 2. Make sure you're using a compatible version of JavaFX. You may need to adjust the JavaFX version in the `build.gradle` file.
 
-
 ## Contributing
 
 To contribute to this project, please fork the repository and submit a pull request with your changes.
-
-
-
