@@ -1,9 +1,12 @@
 package smash;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -23,7 +26,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.net.URL;
 
 /*
 Holds the game controls and their associated event handlers.  Contains game data
@@ -55,7 +57,7 @@ public class Game
     {        
         BorderPane root = new BorderPane();
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        addStyleSheet();
+        //addStyleSheet();
 
         scoreBoard = new ScoreBoard();
         boolean autoStart = true;
@@ -77,7 +79,7 @@ public class Game
     {
         BorderPane root = new BorderPane();
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT); 
-        addStyleSheet();
+        //addStyleSheet();
         
         userName = savedGame.getName();
         int ptsPerBrick = savedGame.getPointsPerBrick();
@@ -357,7 +359,7 @@ public class Game
     private void addStyleSheet()
     {
         try {
-            URL resourceUrl = getClass().getResource("/smash/resources/style_sheet.css");
+            URL resourceUrl = getClass().getResource(System.getProperty("user.dir") + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "style_sheet.css");
             if (resourceUrl == null) {
                 System.err.println("Unable to find style_sheet.css");
                 // You might want to set a default style or throw an exception here

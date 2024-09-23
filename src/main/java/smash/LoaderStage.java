@@ -3,6 +3,7 @@ package smash;
 
 import java.io.IOException;
 import java.util.List;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,17 +28,7 @@ public class LoaderStage extends Application
     private Stage primaryStage;
     @Override
     public void start(Stage primaryStage) 
-    {
-        try
-        {
-            //GameIO.deleteOldGames();
-            GameIO.loadPackagedGames();
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        
+    {     
         BorderPane root = new BorderPane();
         root.setCenter(createSelectGamePane());
         root.setBottom(createButtonPane());
@@ -49,7 +40,7 @@ public class LoaderStage extends Application
     }
     
     private Node createSelectGamePane()
-    {
+    { 
         TreeItem rootItem = new TreeItem("Select new game or saved game"); //root of TreeView
         rootItem.setExpanded(true);
         

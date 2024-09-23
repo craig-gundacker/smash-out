@@ -1,12 +1,8 @@
 package smash;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,30 +14,27 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
-import org.apache.commons.io.FileUtils;
 
 /*
 Handles input and output of saved games
 */
 public class GameIO
 {    
-    protected static final String PROJECT_ROOT_DIR = "smash_out";
-    private static final String PROJECT_ROOT_DIR_PATH = System.getProperty("user.home") 
-            + File.separator + PROJECT_ROOT_DIR;
-    private static final String SAVED_GAMES_DIR = "saved_games";
-    private static final String SAVED_GAMES_DIR_PATH = PROJECT_ROOT_DIR_PATH 
-            + File.separator + SAVED_GAMES_DIR;
-    private static final String DELETED_GAMES_FILE = "games_to_delete.txt";
-    private static final String[] PRELOADED_NAMES = {"Lucille", "Roger", "Teddy"};
-    private static final String[] ZIP_FILES = {"resources/Lucille.zip", "resources/Roger.zip",
-                                                "resources/Teddy.zip"};
+    public static final String SAVED_DATA_ROOT_DIR = "smash_out";
+    public static final String SAVED_DATA_ROOT_DIR_PATH = System.getProperty("user.home") 
+            + File.separator + SAVED_DATA_ROOT_DIR;
+    public static final String SAVED_GAME_DATA_DIR = "saved_games";
+    public static final String SAVED_GAME_DATA_DIR_PATH = SAVED_DATA_ROOT_DIR_PATH 
+            + File.separator + SAVED_GAME_DATA_DIR;
+    //private static final String DELETED_GAMES_FILE = "games_to_delete.txt";
+    //private static final String[] PRELOADED_NAMES = {"Lucille", "Roger", "Teddy"};
+    //private static final String[] ZIP_FILES = {"resources/Lucille.zip", "resources/Roger.zip", "resources/Teddy.zip"};
     private static PrintWriter output;
     private static Scanner input;
     
@@ -58,13 +51,12 @@ public class GameIO
     
     /*
     If not already loaded, method loads in progress games that are bundled in jar file
-    */
     public static void loadPackagedGames() throws IOException
     {
-        Path pathSavedGames = Paths.get(SAVED_GAMES_DIR_PATH);
+        Path pathSavedGames = Paths.get(SAVED_GAME_DATA_DIR_PATH);
         if (Files.notExists(pathSavedGames))
         {     
-            File dirSavedGames = new File(SAVED_GAMES_DIR_PATH);
+            File dirSavedGames = new File(SAVED_GAME_DATA_DIR_PATH);
             if(dirSavedGames.mkdirs())
             {
                 for (int i = 0; i < PRELOADED_NAMES.length; i++)
@@ -82,6 +74,7 @@ public class GameIO
     /*
     Streams game data text files to directories associated with each game
     */
+    /* 
     private static void unZipPreLoadedGame(File dirUser, int i)
     {
         final int BUFFER = 2048;
@@ -121,18 +114,20 @@ public class GameIO
            e.printStackTrace();
         }        
     }
-    
+    */
     /*
     Built as a workaround.  The program couldn't delete a game directory and its
     sub files once a game was completed because of files being locked.  I thought
     that I could delete the files when the program reloaded.  It didn't work.  I found
     a more straightforward solution
     */
+    
+    /* 
     public static void deleteOldGames() throws IOException
     {
         List<String> gamesToDelete = new ArrayList<>();
         
-        Path pathGamesToDelete = Paths.get(PROJECT_ROOT_DIR_PATH + File.separator + DELETED_GAMES_FILE);
+        Path pathGamesToDelete = Paths.get(SAVED_DATA_ROOT_DIR_PATH + File.separator + DELETED_GAMES_FILE);
         if (Files.exists(pathGamesToDelete))
         {
             File file = pathGamesToDelete.toFile();
@@ -152,10 +147,12 @@ public class GameIO
             }
         }
     }
-    
+    */
+
+    /* 
     public static void deleteGameDir(String name) throws IOException
     {                      
-        Path pathDir = Paths.get(SAVED_GAMES_DIR_PATH + File.separator + name);
+        Path pathDir = Paths.get(SAVED_GAME_DATA_DIR_PATH + File.separator + name);
         if (Files.exists(pathDir))
         {
             File fileDir = pathDir.toFile();
@@ -167,10 +164,13 @@ public class GameIO
             FileUtils.deleteDirectory(fileDir);
         }
     }
-    
+    */
+
     /*
     See comments above deleteOldGame() method
     */
+
+    /* 
     public static List<String> addGameToDeletionList(String newDeleteGame)
     {
         List<String> gamesToDelete = new ArrayList<>();
@@ -178,7 +178,7 @@ public class GameIO
         
         try
         {
-            Path path = Paths.get(PROJECT_ROOT_DIR_PATH + File.separator + DELETED_GAMES_FILE);
+            Path path = Paths.get(SAVED_DATA_ROOT_DIR_PATH + File.separator + DELETED_GAMES_FILE);
             if (Files.exists(path))
             {
                 File file = path.toFile();
@@ -213,17 +213,33 @@ public class GameIO
         }
         return gamesToDelete;
     }
-    
+    */
+
     /*
     Takes user through different options and results during quit game process
     */
     public static void processQuit(Game game, boolean quitGame) throws IOException, NoSuchElementException
     {
-        Path pathGames = Paths.get(SAVED_GAMES_DIR_PATH);
-        if (Files.notExists(pathGames))
+        //Path pathGames = Paths.get(SAVED_GAME_DATA_DIR_PATH);
+
+        File directory = new File(SAVED_GAME_DATA_DIR_PATH);
+
+        // Check if the directory exists
+        if (!directory.exists()) {
+            // Directory does not exist, so create it
+            if (directory.mkdirs()) {
+                System.out.println("Directory created successfully.");
+            } else {
+                System.out.println("Failed to create the directory.");
+            }
+        } else {
+            System.out.println("Directory already exists.");
+        }
+        
+        /*if (!Files.exists(pathGames))
         {
            Files.createDirectory(pathGames);
-        }        
+        }        */
 
         Alert alertSave = new Alert(AlertType.CONFIRMATION);
         alertSave.setTitle("Save game?");
@@ -242,8 +258,7 @@ public class GameIO
             Path pathGame = null;
             if (userName != null)
             {
-                pathGame = Paths.get(SAVED_GAMES_DIR_PATH + File.separator + userName);
-                saveGame(game, userName, pathGame);
+                pathGame = Paths.get(SAVED_GAME_DATA_DIR_PATH + File.separator + userName);
             }
             else
             {
@@ -254,7 +269,7 @@ public class GameIO
                     userName = in.get();
                     if (userName != null && !userName.isEmpty())
                     {
-                        pathGame = Paths.get(SAVED_GAMES_DIR_PATH + File.separator + userName);
+                        pathGame = Paths.get(SAVED_GAME_DATA_DIR_PATH + File.separator + userName);
                         if (Files.exists(pathGame))
                         {
                             showGameExistsDialog();
@@ -267,8 +282,8 @@ public class GameIO
                     }
                 }
                 while (cont);
-                saveGame(game, userName, pathGame);
             }
+            saveGame(game, userName, pathGame);
         }
                    
         if (quitGame)
@@ -451,7 +466,7 @@ public class GameIO
     public static List<String> retrieveSavedGames() throws IOException
     {
         List<String> filePaths = new ArrayList<>();
-        Path path = Paths.get(SAVED_GAMES_DIR_PATH);
+        Path path = Paths.get(SAVED_GAME_DATA_DIR_PATH);
         if (Files.exists(path))
         {
             if (Files.isDirectory(path))
@@ -511,7 +526,7 @@ public class GameIO
     
     private static String retrieveName(String dir) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + dir + File.separator + 
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + dir + File.separator + 
                 NAME_FILE);
         input = new Scanner(file);
         String name = null;
@@ -527,7 +542,7 @@ public class GameIO
     
     private static List<Integer> retrieveScoreboardData(String directory) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator + 
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator + 
                 SCOREBOARD_FILE);
         input = new Scanner(file);
         List<Integer> data = new ArrayList<>();
@@ -543,7 +558,7 @@ public class GameIO
     
     private static List<Ball> retrieveBallData(String directory) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator + 
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator + 
                 BALL_FILE);
         input = new Scanner(file);
         List<Ball> alRestoredBall = new ArrayList<>();
@@ -566,7 +581,7 @@ public class GameIO
     
     private static List<Bolt> retrieveBoltData(String directory) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator + 
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator + 
                 BOLT_FILE);
         input = new Scanner(file);
         List<Bolt> alRestoredBolt = new ArrayList<>();
@@ -589,7 +604,7 @@ public class GameIO
     private static boolean[][] retrieveBrickData(String directory) throws FileNotFoundException
     {
         boolean brickGrid[][] = new boolean[BallPane.getNUM_ROWS()][BallPane.getNUM_COLUMNS()];
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator +
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator +
                 BRICK_FILE);
         input = new Scanner(file);
         
@@ -611,7 +626,7 @@ public class GameIO
     private static Map<String, Double> retrievePaddleData(String directory) throws FileNotFoundException
     {
         Map<String, Double> hmPaddleData = new HashMap<>();
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator +
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator +
                 PADDLE_FILE);
         input = new Scanner(file);
         while (input.hasNext())
@@ -626,7 +641,7 @@ public class GameIO
     
     private static double retrieveBallSpeedData(String directory) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator +
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator +
         SPEED_FILE);
         input = new Scanner(file);
         double speed = Game.INIT_SPEED;
@@ -642,7 +657,7 @@ public class GameIO
     
     private static boolean retrieveAttackModeData(String directory) throws FileNotFoundException
     {
-        File file = new File(SAVED_GAMES_DIR_PATH + File.separator + directory + File.separator +
+        File file = new File(SAVED_GAME_DATA_DIR_PATH + File.separator + directory + File.separator +
         ATTACK_FILE);
         input = new Scanner(file);
         boolean attackOn = false;

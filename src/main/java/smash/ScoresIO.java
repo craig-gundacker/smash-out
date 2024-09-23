@@ -1,5 +1,7 @@
 package smash;
 
+import static javafx.application.Application.STYLESHEET_CASPIAN;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +16,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Scanner;
-import static javafx.application.Application.STYLESHEET_CASPIAN;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,9 +39,9 @@ public class ScoresIO
     private final ScoreBoard currentScoreBoard;
     private final ArrayList<String> alLines = new ArrayList<>();
     private final ArrayList<Integer> alScores = new ArrayList<>();
-    private final String RESOURCE_HIGH_SCORES = "/smash/resources/high_scores_resource.txt";
-    private final String FILE_PATH_HIGH_SCORES = System.getProperty("user.home") + File.separator + 
-            GameIO.PROJECT_ROOT_DIR + File.separator + "high_scores_file.txt";
+    private final String RESOURCE_HIGH_SCORES = "high_scores_resource.txt";
+    private final String FILE_PATH_HIGH_SCORES = System.getProperty("user.dir") + File.separator + 
+            "src" + File.separator + "main" + File.separator + "resources" + RESOURCE_HIGH_SCORES;
     private static final int NUM_ENTRIES = 10;
     
     public ScoresIO(ScoreBoard currentScoreBoard)
