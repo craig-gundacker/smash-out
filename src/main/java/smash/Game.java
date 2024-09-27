@@ -51,6 +51,7 @@ public class Game
             + "Adjust ball speed and paddle size.  Select attack mode and avoid the lighting bolts. "
             + "Earn enough points and you make the top scorer list.  Save game if you want to come back "
             + "to it later.  That's about it.";
+    private boolean gamePaused = false;
     
     //Creates a new game
     public Game()
@@ -212,7 +213,24 @@ public class Game
 //            startSelectionProcess(quitGame);
 //        });
         
-        Button btnQuit = new Button("Quit Game");
+        Button btnPause = new Button("Pause");
+        btnPause.setOnAction(e -> 
+        {      
+            if (!gamePaused)
+            {
+                ballPane.pause();
+                btnPause.setText("Play");
+                gamePaused = true;
+            }
+            else
+            {
+                ballPane.play();
+                btnPause.setText("Pause");
+                gamePaused = false;
+            }
+        });
+
+        Button btnQuit = new Button("Quit");
         btnQuit.setOnAction(e -> 
         {      
             boolean quitGame = true;
@@ -220,7 +238,7 @@ public class Game
         });
          
         HBox hbButtons = new HBox(7.5);
-        hbButtons.getChildren().addAll(btnAdd, btnSubtract, btnQuit);
+        hbButtons.getChildren().addAll(btnAdd, btnSubtract, btnPause, btnQuit);
         hbButtons.setAlignment(Pos.CENTER);
         hbButtons.setPadding(new Insets(0, 0, 5, 0));
 
