@@ -1,52 +1,79 @@
 plugins {
+    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'commons-io:commons-io:2.11.0'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
+def javaFXVersion = '17.0.12'
+
 javafx {
-    version = "16"
-    modules = ['javafx.controls', 'javafx.fxml']
+    version = javaFXVersion
+    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media', 'javafx.swing', 'javafx.web']
+}
+
+dependencies {
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 application {
     mainClass = 'smash.LoaderStage'
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java']
-        }
-        resources {
-            srcDirs = ['src/main']
-            include '**/*.css'
-            include '**/*.zip'
-            include '**/*.txt'
-        }
-    }
-}
-
 jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
     manifest {
         attributes 'Main-Class': 'smash.LoaderStage'
     }
-}
-
-tasks.withType(Jar) {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-compileJava {
-    options.compilerArgs << '-Xlint:-module'
+run {
+    jvmArgs = [
+        '--add-modules', 'javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web'
+    ]
+}
+
+task createWindowsDistribution(type: Exec) {
+    dependsOn jar
+    workingDir "$buildDir"
+    
+    def javaHome = System.getenv("JAVA_HOME") ?: "C:/Program Files/Java/jdk-17"
+    def jpackagePath = "${javaHome}/bin/jpackage"
+    def appVersion = '1.0.0'
+    def javafxModulePath = System.getenv('PATH_TO_FX') ?: 'C:/JavaFx/javafx-sdk-17.0.12/lib'
+
+    commandLine jpackagePath,
+            '--type', 'exe',
+            '--name', 'SmashOut',
+            '--description', 'SmashOut Game',
+            '--vendor', 'Craig Gundacker',
+            '--copyright', 'Copyright 2024',
+            '--app-version', appVersion,
+            '--input', 'libs',
+            '--dest', 'dist',
+            '--main-jar', jar.archiveFileName.get(),
+            '--main-class', 'smash.LoaderStage',
+            '--module-path', "${javafxModulePath}",
+            '--add-modules', 'javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web',
+            '--win-dir-chooser',
+            '--win-menu',
+            '--win-shortcut',
+            '--icon', "${projectDir}/src/main/resources/smash-out.ico",
+            '--java-options', '--add-modules=java.base,java.desktop,java.naming,java.sql,jdk.crypto.ec,jdk.unsupported'
+
+    doFirst {
+        mkdir 'dist'
+    }
 }
