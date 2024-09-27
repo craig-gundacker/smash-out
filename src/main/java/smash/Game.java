@@ -148,14 +148,14 @@ public class Game
     
     private Node createControlsPane()
     {
-        Label lblAdjustSpeed = new Label("Adjust Ball Speed: ");
+        Label lblAdjustSpeed = new Label("Ball Speed: ");
         sbSpeed.setMax(MAX_SPEED);
         sbSpeed.setMin(0);
         sbSpeed.setMinHeight(30);
         sbSpeed.setMaxWidth(scene.getWidth()/4);
         ballPane.rateProperty().bind(sbSpeed.valueProperty());  
 
-        Label lblReSizePaddle = new Label("Resize Paddle: ");
+        Label lblReSizePaddle = new Label("Paddle Size: ");
         Button btnIncPaddle = new Button("+");
         btnIncPaddle.setOnAction(e -> ballPane.makePaddleBigger());
         Button btnDecPaddle = new Button("-");
