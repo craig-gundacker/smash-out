@@ -161,7 +161,7 @@ public class Game
         Button btnDecPaddle = new Button("-");
         btnDecPaddle.setOnAction(e -> ballPane.makePaddleSmaller());
         
-        Label lblAttack = new Label("Attack Mode: ");
+        Label lblAttack = new Label("Lighting bolts: ");
         ToggleGroup tgAttackMode = new ToggleGroup();
         rdbAttackOn.setToggleGroup(tgAttackMode);
         rdbAttackOff.setToggleGroup(tgAttackMode);        
