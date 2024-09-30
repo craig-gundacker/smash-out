@@ -42,7 +42,7 @@ class BallPane extends Pane
     private static final double OPACITY = .5;
     private final double brickZone;
     private int numBalls;
-    private final int MAX_BALLS = 10;
+    private final int MAX_BALLS = 7;
     private final int MIN_RADIUS = 10;
     private final int RADIUS_FACTOR = 15;
     private final double AF = 1.2; //Ball acceleration factor
