@@ -34,7 +34,7 @@ class BallPane extends Pane
     private static final double MIN_PADDLE_WIDTH_FACTOR = .5;
     private static final double PADDLE_CHANGE_AMOUNT = 5.0;
     protected static final double PADDLE_WIDTH = 125;
-    protected static final double PADDLE_HEIGHT = 12.5;
+    protected static final double PADDLE_HEIGHT = 15;
     private static final int NUM_ROWS = 5;
     private static final int NUM_COLUMNS = 10;
     private final double BRICK_WIDTH; 
